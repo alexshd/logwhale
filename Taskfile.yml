@@ -1,0 +1,24 @@
+# https://taskfile.dev
+
+version: "3"
+
+vars:
+  GREETING: Hello, World!
+
+# silent: true
+
+tasks:
+  default:
+    cmds:
+      - task: go:test
+
+  go:test:
+    desc: "test all"
+    deps:
+      - go:tidy
+    cmds:
+      - set -o pipefail && go test -cover -race  ./... -json | gotestfmt
+
+  go:tidy:
+    cmds:
+      - go mod tidy
